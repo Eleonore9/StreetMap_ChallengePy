@@ -1,0 +1,27 @@
+<!doctype html>
+
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>StreetMap by Eleonore</title>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDMBtF2tCkYSNzMl4OqRlUHj7ahkgUFU_A&sensor=false&region=GB">
+	</script>
+	<script>
+		function initialize()
+		{
+			var geocoder = new google.maps.Geocoder();
+			geocoder.geocode({ '1600+Amphitheatre+Parkway,+Mountain+View,+CA': address }, function(results, status) {
+				if (status == google.maps.GeocoderStatus.OK) {
+				    map.setCenter(results[0].geometry.location);
+				    var marker = new google.maps.Marker({
+				    map: map,
+				    position: results[0].geometry.location
+				});
+
+		google.maps.event.addDomListener(window, 'load', initialize);
+	</script>
+</head>
+<body></body>
+</html>
