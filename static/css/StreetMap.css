@@ -1,0 +1,19 @@
+h1 {
+	text-align: center;
+}
+
+li {
+	margin-top: 40px;
+	font-weight: bold;
+}
+
+#googleMap {
+	margin-top: 20px;
+	margin-left: 490px;
+	width:700px;
+	height:580px;
+}
+
+#store_info {
+	margin-left: 490px;
+}

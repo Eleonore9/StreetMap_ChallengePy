@@ -3,7 +3,7 @@
 import os, sys
 from flask import Flask, flash, render_template, redirect, request 
 from flask import url_for, session, send_from_directory
-import model
+import model, json
 import urllib, urlparse
 
 
@@ -13,22 +13,20 @@ app.config.update(
 	DEBUG = True,
 )
 
-@app.route("/")
-def index():
-	addresses = model.get_store_address("http://www.streethub.com/api/challenge")
-	#get a list containing all stores addresses
-	list_geocode = []
-	for address in addresses:
-	#for each store address get the latitude and longitude
-		addr = address.replace(' ', '+')
-		addr += '+London'
-		#build the url using Google api and addresses founds with StreetHub api
-		url = urlparse.urlunparse( ("http", "maps.googleapis.com/maps/api/geocode",'json?address=', addr,'&sensor=false&region=GB', "") )
-		# url = urlparse.urlunparse( ("http", "maps.googleapis.com/maps/api/geocode",'json?address=oxford+street+London','&sensor=false', "", "") )
-		list_geocode.append(model.geocode_address(url))
-	print list_geocode
-	return render_template("index.html", list_geocode=list_geocode)
 
+@app.route('/')
+def index():
+	url = "http://www.streethub.com/api/challenge"
+	data = model.get_api_stuff(url)
+	names = []
+	oh = []
+	for i in range(19):
+		names.append(data[i]['name'])
+		oh.append(data[i]['oh'])
+		with open(os.path.join('./static/js/json/', 'data' + str(i) + '.json'), 'w') as outfile:
+			json.dump(model.get_geocodes(i), outfile)
+	info = zip(names, oh)
+	return render_template("index.html", info=info)
 
 
 if __name__ == "__main__":
